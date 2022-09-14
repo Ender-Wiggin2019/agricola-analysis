@@ -4,6 +4,7 @@ import openpyxl
 import requests
 import json
 
+title = st.text_input("输入标题")
 text = st.text_area("输入文本")
 
 def raw_to_df(data):
@@ -24,8 +25,10 @@ def raw_to_df(data):
     return df
     # res.to_excel('./sample.xlsx', index = False)
     # res.tail(20)
-path = './output.xlsx'
-output_file = raw_to_df(text).to_excel(path, index=False)
+    
+if title != '':
+    path = './'+title+'.xlsx'
+    output_file = raw_to_df(text).to_excel(path, index=False)
 
-with open(path, 'rb') as my_file:
-    st.download_button(label = 'Download', data = my_file, file_name = 'output.xlsx', mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')    
+    with open(path, 'rb') as my_file:
+        st.download_button(label = 'Download', data = my_file, file_name = title+'.xlsx', mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')    
